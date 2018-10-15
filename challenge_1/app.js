@@ -9,24 +9,29 @@ var state = {
   ],
   numTurns: 0,
   gameDone: false,
-  playerStats: {
-    X:{score: 0, name: undefined},
-    O:{score: 0, name: undefined}
+  score: {
+    X:0,
+    O:0
   }
 };
+
+var userInputs = {
+  X: undefined,
+  O: undefined
+}
 
 var elements = {
   bd: document.getElementById('board'),
   resetButton: document.getElementById('reset')
 }
 
-//Get player's names on pageload
+//Get player's names on pageload and set state accordingly
 var getNames = function() {
-  state.playerStats.X.name = prompt("Hi Player X! \n Please enter your name.") || 'Player X';
-  state.playerStats.O.name = prompt("Hi Player O! \n Please enter your name.") || 'Player O';
+  userInputs.X = prompt("Hi Player X! \n Please enter your name.") || 'Player X';
+  userInputs.O = prompt("Hi Player O! \n Please enter your name.") || 'Player O';
 
-  let text = `${state.playerStats.X.name} (X) vs. ${state.playerStats.O.name} (O)`;
-  document.getElementById('scoreboard').innerHTML=text;
+  let text = `${userInputs.X} (X) vs. ${userInputs.O} (O)`;
+  document.getElementById('scoreboard').innerHTML = text;
 }
 
 
@@ -46,10 +51,9 @@ var eventTest = function(ev) {
     currentCell.innerHTML = state.currentPlayer; 
     state.board[row][col] = state.currentPlayer;
     state.numTurns += 1;
-    console.log(state.board);
     //Check for winner
     if (checkForWinner(state.currentPlayer, state.board)){
-      let message = `${state.playerStats[state.currentPlayer].name} is the winner, hooray!!`;
+      let message = `${userInputs[state.currentPlayer]} is the winner, hooray!!`;
       state.lastWinner = state.currentPlayer;
       updateScores(state.lastWinner);
       state.gameDone = true;
@@ -68,7 +72,6 @@ var eventTest = function(ev) {
     } else {
       state.currentPlayer = 'X';
     }
-    console.log('The current player is ', state.currentPlayer);
     document.getElementById('next').innerHTML='Next turn: ' + state.currentPlayer;
   }
 };
@@ -154,11 +157,11 @@ var resetGame = function() {
 //Updating scoreboard
 var updateScores = function(winner) {
   if (winner === 'X') {
-    state.playerStats.X.score += 1; 
+    state.score.X += 1; 
   } else {
-    state.playerStats.O.score += 1; 
+    state.score.O += 1; 
   }
-  document.getElementById('score').innerHTML = `${state.playerStats.X.score} : ${state.playerStats.O.score}`
+  document.getElementById('score').innerHTML = `${state.score.X} : ${state.score.O}`
 }
 
 //Setting click events
