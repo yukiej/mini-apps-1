@@ -8,7 +8,10 @@ var state = {
   [undefined, undefined, undefined]
   ],
   numTurns: 0,
-  score: [0,0]// X,O
+  playerStats: {
+    X:{score: 0, name: undefined},
+    O:{score: 0, name: undefined}
+  },
 };
 
 var elements = {
@@ -138,11 +141,11 @@ var resetGame = function() {
 //Updating scoreboard
 var updateScores = function(winner) {
   if (winner === 'X') {
-    state.score[0] += 1;
-    document.getElementById('xWins').innerHTML = `X wins: ${state.score[0]}`; 
+    state.playerStats.X.score += 1;
+    document.getElementById('xWins').innerHTML = `X wins: ${state.playerStats.X.score}`; 
   } else {
-    state.score[1] += 1; 
-    document.getElementById('oWins').innerHTML = `O wins: ${state.score[1]}`
+    state.playerStats.O.score += 1; 
+    document.getElementById('oWins').innerHTML = `O wins: ${state.playerStats.O.score}`
   }
 }
 //Setting click events
