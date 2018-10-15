@@ -8,15 +8,25 @@ var state = {
   [undefined, undefined, undefined]
   ],
   numTurns: 0,
+  gameDone: false,
   playerStats: {
     X:{score: 0, name: undefined},
     O:{score: 0, name: undefined}
-  },
+  }
 };
 
 var elements = {
   bd: document.getElementById('board'),
   resetButton: document.getElementById('reset')
+}
+
+//Get player's names on pageload
+var getNames = function() {
+  state.playerStats.X.name = prompt("Hi Player X! \n Please enter your name.") || 'Player X';
+  state.playerStats.O.name = prompt("Hi Player O! \n Please enter your name.") || 'Player O';
+
+  let text = `${state.playerStats.X.name} (X) vs. ${state.playerStats.O.name} (O)`;
+  document.getElementById('scoreboard').innerHTML=text;
 }
 
 
@@ -32,16 +42,17 @@ var eventTest = function(ev) {
   
 
   //If clicked cell is empty, update the cell with value of currentPlayer
-  if (currentVal === '&nbsp;') {
+  if (currentVal === '&nbsp;' && !state.gameDone) {
     currentCell.innerHTML = state.currentPlayer; 
     state.board[row][col] = state.currentPlayer;
     state.numTurns += 1;
     console.log(state.board);
     //Check for winner
     if (checkForWinner(state.currentPlayer, state.board)){
-      let message = `${state.currentPlayer} is the winner, hooray!!`;
+      let message = `${state.playerStats[state.currentPlayer].name} is the winner, hooray!!`;
       state.lastWinner = state.currentPlayer;
       updateScores(state.lastWinner);
+      state.gameDone = true;
       alert(message);
       return;
     }
@@ -111,8 +122,6 @@ var diagonalWin = function(player, board) {
     return (allSameForward || allSameBackward);
   }
 
-
-//Functions to check for winner
 var checkForWinner = function(player, board) {
   return rowWin(player, board) || colWin(player, board) || diagonalWin(player, board)
 }
@@ -128,6 +137,7 @@ var resetGame = function() {
 
   state.numTurns = 0; 
   state.currentPlayer = state.lastWinner;
+  state.gameDone = false;
 
   //for every cell of the table, reset value to &nbsp;
   for (let row = 0; row < state.board.length; row += 1) {
@@ -138,16 +148,19 @@ var resetGame = function() {
   }
 }
 
+//disabling board after someone wins
+
+
 //Updating scoreboard
 var updateScores = function(winner) {
   if (winner === 'X') {
-    state.playerStats.X.score += 1;
-    document.getElementById('xWins').innerHTML = `X wins: ${state.playerStats.X.score}`; 
+    state.playerStats.X.score += 1; 
   } else {
     state.playerStats.O.score += 1; 
-    document.getElementById('oWins').innerHTML = `O wins: ${state.playerStats.O.score}`
   }
+  document.getElementById('score').innerHTML = `${state.playerStats.X.score} : ${state.playerStats.O.score}`
 }
+
 //Setting click events
 
 elements.bd.onclick = eventTest;
