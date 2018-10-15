@@ -1,13 +1,18 @@
-var currentPlayer = 'X';
-var board = [
+//State of game
+var state = {
+  currentPlayer: 'X',
+  board: [
   [undefined, undefined, undefined], 
   [undefined, undefined, undefined],
   [undefined, undefined, undefined]
-  ];
-var numTurns = 0; 
+  ],
+  numTurns: 0
+};
 
-let bd = document.getElementById('board');
-let resetButton = document.getElementById('reset');
+var elements = {
+  bd: document.getElementById('board'),
+  resetButton: document.getElementById('reset')
+}
 
 var eventTest = function(ev) {
   //Figure out which cell got clicked 
@@ -15,39 +20,36 @@ var eventTest = function(ev) {
   let col = ev.target.cellIndex;
 
   //get current value of cell
-  let currentCell = bd.rows[row].cells[col];
+  let currentCell = elements.bd.rows[row].cells[col];
   let currentVal = currentCell.innerHTML;
   
 
   //If clicked cell is empty, update the cell with value of currentPlayer
   if (currentVal === '&nbsp;') {
-    currentCell.innerHTML = currentPlayer; 
-    board[row][col] = currentPlayer;
-    numTurns += 1;
+    currentCell.innerHTML = state.currentPlayer; 
+    state.board[row][col] = state.currentPlayer;
+    state.numTurns += 1;
     //Check for winner
-    if (checkForWinner(currentPlayer, board)){
-      let message = `${currentPlayer} is the winner, hooray!!`;
+    if (checkForWinner(state.currentPlayer, state.board)){
+      let message = `${state.currentPlayer} is the winner, hooray!!`;
       alert(message);
       return;
     }
 
-    if (numTurns === 9) {
+    if (state.numTurns === 9) {
       alert("We have a tie! \nGame over");
-      return
+      return;
     }
 
     //Update currentPlayer to whoever is going next
-    if (currentPlayer === 'X') {
-      currentPlayer = 'O';
+    if (state.currentPlayer === 'X') {
+      state.currentPlayer = 'O';
     } else {
-      currentPlayer = 'X';
+      state.currentPlayer = 'X';
     }
-    document.getElementById('next').innerHTML='Next turn: ' + currentPlayer;
+    document.getElementById('next').innerHTML='Next turn: ' + state.currentPlayer;
   }
 };
-
-bd.onclick = eventTest;
-
 
 //Checking for winner by row, col, and by diagonal
 //input: most recent player (X or O), board after last play
@@ -108,22 +110,27 @@ var checkForWinner = function(player, board) {
 
 //resetting board for new round
 var resetGame = function() {
-  board = [
+  state.board = [
   [undefined, undefined, undefined], 
   [undefined, undefined, undefined],
   [undefined, undefined, undefined]
   ];
 
-  numTurns = 0; 
+  state.numTurns = 0; 
+  state.currentPlayer = 'X';
 
   //for every cell of the table, reset value to &nbsp;
-  for (let row = 0; row < board.length; row += 1) {
-    for (let col = 0; col < board.length; col += 1) {
-      let currentCell = bd.rows[row].cells[col];
+  for (let row = 0; row < state.board.length; row += 1) {
+    for (let col = 0; col < state.board.length; col += 1) {
+      let currentCell = elements.bd.rows[row].cells[col];
       currentCell.innerHTML = '&nbsp';
     }
   }
 }
 
-resetButton.onclick = resetGame;
+//Setting click events
+
+elements.bd.onclick = eventTest;
+elements.resetButton.onclick = resetGame;
+
 
