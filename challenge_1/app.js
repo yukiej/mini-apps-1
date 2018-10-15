@@ -13,14 +13,42 @@ var board = [
 let bd = document.getElementById('board');
 
 var eventTest = function(ev) {
-  console.log('just clicked on table col ', ev.target.cellIndex, "and row ", ev.target.parentNode.rowIndex);
+  //When a square on the board is clicked
+  //Figure out which cell got clicked 
+  let row = ev.target.parentNode.rowIndex;
+  let col = ev.target.cellIndex;
+
+  //get current value of cell
+  let currentCell = bd.rows[row].cells[col]
+  let currentVal = currentCell.innerHTML;
+  
+  // console.log('the value at cell', row, ', ', col, 'is :', currentVal);
+
+  //If the cell is empty
+  //update the cell with the value of currentPlayer
+  if (currentVal === '&nbsp;') {
+    currentCell.innerHTML = currentPlayer; 
+    //update the board with the value and position of the clicked cell 
+    board[row][col] = currentPlayer;
+    //Update currentPlayer to whoever is going next
+    if (currentPlayer === 'X') {
+      currentPlayer = 'O';
+    } else {
+      currentPlayer = 'X';
+    }
+    document.getElementById('next').innerHTML='Next turn: ' + currentPlayer;
+  } else {
+    console.log('the value at cell', row, ', ', col, 'is :', currentVal);
+  }
+
+
+
 };
 
 bd.onclick = eventTest;
 
 
-//When a square on the board is clicked
-//Figure out which cell got clicked
+
 // var board = document.getElementById('board');
 // let col = board.cellIndex;
 // let row = board.parentNode.rowIndex;
