@@ -1,12 +1,14 @@
 //State of game
 var state = {
   currentPlayer: 'X',
+  lastWinner: undefined,
   board: [
   [undefined, undefined, undefined], 
   [undefined, undefined, undefined],
   [undefined, undefined, undefined]
   ],
-  numTurns: 0
+  numTurns: 0,
+  score: [0,0]// X,O
 };
 
 var elements = {
@@ -32,6 +34,8 @@ var eventTest = function(ev) {
     //Check for winner
     if (checkForWinner(state.currentPlayer, state.board)){
       let message = `${state.currentPlayer} is the winner, hooray!!`;
+      state.lastWinner = state.currentPlayer;
+      updateScores(state.lastWinner);
       alert(message);
       return;
     }
@@ -41,12 +45,13 @@ var eventTest = function(ev) {
       return;
     }
 
-    //Update currentPlayer to whoever is going next
+    //If no one won and there is no tie, update currentPlayer to whoever is going next
     if (state.currentPlayer === 'X') {
       state.currentPlayer = 'O';
     } else {
       state.currentPlayer = 'X';
     }
+    console.log('The current player is ', state.currentPlayer);
     document.getElementById('next').innerHTML='Next turn: ' + state.currentPlayer;
   }
 };
@@ -117,7 +122,7 @@ var resetGame = function() {
   ];
 
   state.numTurns = 0; 
-  state.currentPlayer = 'X';
+  state.currentPlayer = state.lastWinner;
 
   //for every cell of the table, reset value to &nbsp;
   for (let row = 0; row < state.board.length; row += 1) {
@@ -128,6 +133,16 @@ var resetGame = function() {
   }
 }
 
+//Updating scoreboard
+var updateScores = function(winner) {
+  if (winner === 'X') {
+    state.score[0] += 1;
+    document.getElementById('xWins').innerHTML = `X wins: ${state.score[0]}`; 
+  } else {
+    state.score[1] += 1; 
+    document.getElementById('oWins').innerHTML = `O wins: ${state.score[1]}`
+  }
+}
 //Setting click events
 
 elements.bd.onclick = eventTest;
