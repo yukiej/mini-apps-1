@@ -16,6 +16,8 @@ var elements = {
   resetButton: document.getElementById('reset')
 }
 
+
+//Functions that update state
 var eventTest = function(ev) {
   //Figure out which cell got clicked 
   let row = ev.target.parentNode.rowIndex;
@@ -31,6 +33,7 @@ var eventTest = function(ev) {
     currentCell.innerHTML = state.currentPlayer; 
     state.board[row][col] = state.currentPlayer;
     state.numTurns += 1;
+    console.log(state.board);
     //Check for winner
     if (checkForWinner(state.currentPlayer, state.board)){
       let message = `${state.currentPlayer} is the winner, hooray!!`;
@@ -79,10 +82,9 @@ var colWin = function(player, board) {
     }
     if (allSame) {
       return true;
-    } else {
-      return false;
     }
   }
+  return false;
 }
 //by diagonal
 var diagonalWin = function(player, board) {
@@ -96,16 +98,16 @@ var diagonalWin = function(player, board) {
 
   //backward diagonal
   let allSameBackward = true;
-  for (let col = 0; col < board.length; col += 1) {
-    for (let row = 2; row >= 0; row -= 1) {
-      if (board[row][col] !== player) {
-        allSameBackward = false;
-      }
+  let col = 0; 
+  for (let row = 2; row >= 0; row -= 1) {
+    if (board[row][col] !== player) {
+      allSameBackward = false;
     }
+    col += 1; 
+    }
+    return (allSameForward || allSameBackward);
   }
 
-  return (allSameForward || allSameBackward);
-}
 
 //Functions to check for winner
 var checkForWinner = function(player, board) {
