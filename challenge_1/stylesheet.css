@@ -1,0 +1,35 @@
+table {
+  width: 250px;
+  empty-cells: show;
+  table-layout: fixed;
+}
+
+table, th, td {
+  border: 1px solid black;
+  padding: 10px 10px 10px 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-collapse: collapse;
+}
+
+td {
+  text-align: center;
+  vertical-align: middle;
+  width: 50px;
+}
+
+body {
+  font-family: "Verdana", Geneva, sans-serif;
+}
+
+button {
+  padding: 10px 10px 10px 10px;
+}
+
+div {
+  position: relative;
+  margin: auto;
+  width: 250px;
+  align: "center";
+  text-align: center;
+}
