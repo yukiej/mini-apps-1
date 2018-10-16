@@ -1,4 +1,4 @@
-table {
+/*table {
   width: 250px;
   empty-cells: show;
   table-layout: fixed;
@@ -10,11 +10,28 @@ table, th, td {
   margin-top: 10px;
   margin-bottom: 10px;
   border-collapse: collapse;
-}
+}*/
 
-td {
+/*td {
   text-align: center;
   vertical-align: middle;
+  width: 50px;
+}*/
+
+.table {
+  display: table;
+}
+
+.row {
+  display: table-row;
+}
+
+.cell {
+  display: table-cell;
+  border: solid;
+  border-width: thin;
+  text-align: center;
+  height: 50px;
   width: 50px;
 }
 
@@ -24,12 +41,12 @@ body {
 
 button {
   padding: 10px 10px 10px 10px;
+  margin-top: 10px;
 }
 
 div {
   position: relative;
   margin: auto;
-  width: 250px;
-  align: "center";
   text-align: center;
+  vertical-align: middle;
 }

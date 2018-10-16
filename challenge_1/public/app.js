@@ -38,13 +38,13 @@ var getNames = function() {
 //Functions that update state
 var eventTest = function(ev) {
   //Figure out which cell got clicked 
-  let row = ev.target.parentNode.rowIndex;
-  let col = ev.target.cellIndex;
+  let currentCell = ev.target;
+  let row = currentCell.id.split(',')[0];
+  let col = currentCell.id.split(',')[1];
+
 
   //get current value of cell
-  let currentCell = elements.bd.rows[row].cells[col];
   let currentVal = currentCell.innerHTML;
-  
 
   //If clicked cell is empty, update the cell with value of currentPlayer
   if (currentVal === '&nbsp;' && !state.gameDone) {
@@ -145,8 +145,8 @@ var resetGame = function() {
   //for every cell of the table, reset value to &nbsp;
   for (let row = 0; row < state.board.length; row += 1) {
     for (let col = 0; col < state.board.length; col += 1) {
-      let currentCell = elements.bd.rows[row].cells[col];
-      currentCell.innerHTML = '&nbsp';
+      let currentCellID = String(row) + "," + String(col);
+      document.getElementById(currentCellID).innerHTML = '&nbsp';
     }
   }
 }
