@@ -1,0 +1,38 @@
+{
+    "firstName": "Joshie",
+    "lastName": "Wyattson",
+    "county": "San Mateo",
+    "city": "San Mateo",
+    "role": "Broker",
+    "children": [
+    {
+      "firstName": "Beth Jr.",
+      "lastName": "Johnson",
+      "county": "San Mateo",
+      "city": "Pacifica",
+      "role": "Manager",
+      "children": [
+        {
+          "firstName": "Smitty",
+          "lastName": "Won",
+          "age": 28,
+          "language": "Spanish"
+        },
+        {
+          "firstName": "Allen",
+          "lastName": "Price",
+          "age": 17,
+          "language": "Czech"
+        }
+      ]
+    },
+    {
+      "firstName": "Beth",
+      "lastName": "Johnson",
+      "county": "San Francisco",
+      "city": "San Francisco",
+      "role": "Broker/Sales Person",
+      "children": []
+    }
+  ]
+};
