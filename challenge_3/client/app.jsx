@@ -60,7 +60,22 @@ class AccountFields extends React.Component {
       <div>
         <h2>Account information</h2>
           <div>
-            <button onClick={()=>{console.log('Done with account info!')}}>Next: Shipping information</button>
+            <div>
+              <label>Name</label>
+              <input type="text" ref="name" />
+            </div>
+
+            <div>
+              <label>Email</label>
+              <input type="text" ref="email" />
+            </div>
+
+            <div>
+              <label>Password</label>
+              <input type="text" ref="password" />
+            </div>
+
+            <button onClick={(ev)=>{console.log(this.refs)}}>Next: Shipping information</button>
           </div>
       </div>
     )
