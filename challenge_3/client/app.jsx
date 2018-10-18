@@ -21,14 +21,14 @@ class App extends React.Component {
   }
 
   handleCheckout(event) {
-    // this.setState({step: 1});
-    console.log('The current step is');
-    // event.preventDefault();
+    this.setState({step: this.state.step + 1}, function(){console.log("State after setState is ", this.state.step)});
+    event.preventDefault();
+    // console.log('State is ', this.state.step);
   }
 
   render() {
     if (this.state.step === 0) {
-      return <Homepage func={this.handleCheckout}/>;
+      return <Homepage func={this.handleCheckout.bind(this)}/>;
     } else if (this.state.step === 1) {
       return <AccountFields/>;
     }
@@ -45,16 +45,16 @@ class App extends React.Component {
 class Homepage extends React.Component {
 
   render() {
-    console.log(this.props);
     return (
       <div>
-          <button onClick={()=>{console.log('click registered')}}>Go to checkout</button>
+          <button onClick={this.props.func}>Go to checkout</button>
       </div>
     )
   }
 }
 
 class AccountFields extends React.Component {
+
   render() {
     return (
       <div>
