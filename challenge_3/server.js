@@ -36,8 +36,10 @@ app.get('/checkout', function(req, res) {
 })
 
 app.post('/account', function(req, res) {
-  newTransact(req.body);
-  res.send(req.body);
+  newTransact(req.body, (response) => {
+    // res.send(response);
+    res.status(204).send();
+  });
 });
 // app.post()
 
@@ -48,7 +50,10 @@ let newTransact = function(f1, callback) {
   let password = f1.password;
   let row = new Transaction({name, email, password});
   db.collection('transactCol').insertOne(row);
+  db.collection('transactCol').findOne({name: name}, function(err, result) {
+    callback(result);
+  });
 } 
 
-// newTransact({name: "JaneDoe" , email:"JaneD@yahoo.com", password:"123456"});
+// newTransact({name: "TimmyDoe" , email:"JaneD@yahoo.com", password:"123456"}, (res)=> console.log(res));
 
