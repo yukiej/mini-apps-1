@@ -10,12 +10,12 @@ const Transaction = require('./schema.js');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
-
+//Start listening
 app.listen(port, function() {
   console.log('listening on ', port);
 })
 
-
+//Connect to database
 const ShopDB = 'mongodb://localhost/ShopDB';
 mongoose.connect(ShopDB, { useNewUrlParser: true });
 
@@ -32,24 +32,20 @@ db.once('open', function() {
 //Routes
 app.get('/checkout', function(req, res) {
   res.send("Woohoo done with step 1!");
+  //Eventually want to re-render page with F1
 })
+
+// app.get('/');
 // app.post()
 
 //Making model instances for the database
-let makeTransaction = function(f1) {
+let newTransact = function(f1) {
   let name = f1.name;
   let email = f1.email;
   let password = f1.password;
   let row = new Transaction({name, email, password});
   db.collection('transactCol').insertOne(row);
-  // row.save(function(err, success){
-  //   if (err) {
-  //     console.log("Error saving transaction, sorry!");
-  //   } else {
-  //     console.log("success! ", success);
-  //   }
-  // })
 } 
 
-makeTransaction({name: "JimmyDoe" , email:"JimD@yahoo.com", password:"456"});
+// newTransact({name: "JaneDoe" , email:"JaneD@yahoo.com", password:"123456"});
 
