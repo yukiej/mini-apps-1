@@ -35,11 +35,14 @@ app.get('/checkout', function(req, res) {
   //Eventually want to re-render page with F1
 })
 
-// app.get('/');
+app.post('/account', function(req, res) {
+  newTransact(req.body);
+  res.send(req.body);
+});
 // app.post()
 
 //Making model instances for the database
-let newTransact = function(f1) {
+let newTransact = function(f1, callback) {
   let name = f1.name;
   let email = f1.email;
   let password = f1.password;

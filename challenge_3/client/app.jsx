@@ -1,4 +1,7 @@
 var fieldValues = {
+}
+
+var fieldTemplate = {
   name: 'name',
   email: 'email address', 
   password: 'password',
@@ -26,11 +29,19 @@ class App extends React.Component {
     // console.log('State is ', this.state.step);
   }
 
+  handleAccount(name, email, password) {
+    fieldValues.name = name; 
+    fieldValues.email = email;
+    fieldValues.password = password;
+    console.log(fieldValues);
+    //send the info to the server!
+  }
+
   render() {
     if (this.state.step === 0) {
       return <Homepage func={this.handleCheckout.bind(this)}/>;
     } else if (this.state.step === 1) {
-      return <AccountFields/>;
+      return <AccountFields func={this.handleAccount.bind(this)}/>;
     }
     // } else if (this.state.step === 2) {
     //   return <ShippingFields/>;
@@ -59,24 +70,33 @@ class AccountFields extends React.Component {
     return (
       <div>
         <h2>Account information</h2>
+        <form action="/account" method="post">
           <div>
-            <div>
+            <p>
               <label>Name</label>
-              <input type="text" ref="name" />
-            </div>
+              <input type="text" id="name" name="name" />
+            </p>
 
-            <div>
+            <p>
               <label>Email</label>
-              <input type="text" ref="email" />
-            </div>
+              <input type="text" id="email" name="email"/>
+            </p>
 
-            <div>
+            <p>
               <label>Password</label>
-              <input type="text" ref="password" />
-            </div>
-
-            <button onClick={(ev)=>{console.log(this.refs)}}>Next: Shipping information</button>
+              <input type="text" id="pwd" name="password"/>
+            </p>
+            <p>
+              <button onClick={(ev)=>{
+                this.props.func(
+                  this.refs.name.value, 
+                  this.refs.email.value, 
+                  this.refs.password.value
+                )}}>Next: Shipping information
+              </button>
+            </p>
           </div>
+          </form>
       </div>
     )
   }
