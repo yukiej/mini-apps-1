@@ -10,6 +10,7 @@ class Board extends React.Component {
 
   render() {
     let positions = this.props.playState.positions;
+    let plays = this.props.playState.plays;
     return (
       <div>
         <div className="board-row">
